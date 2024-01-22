@@ -33,6 +33,7 @@ App.use("/select", require("./Selected"))
 App.use("/addquan", require("./Addquan"))
 App.use("/redquan", require("./Redquan"))
 App.use("/delcart", require("./Delcart"))
+App.use("/delprod", require("./Delprod"))
 
 console.log("hello")
 
