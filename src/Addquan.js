@@ -11,9 +11,10 @@ route.route('/:id1').put(async (req, res) => {
 
         const myId = await maincart.findOne({ 'product._id': req.params.id1 }).exec()
         const a = myId.product.filter(prev => prev._id == req.params.id1)
-        console.log(a)
+        const b = a[0]
 
-        const addquantity = await maincart.updateOne({ 'product._id': req.params.id1 }, { $set: { 'product.$.quantity': a._id === req.params.id1 ? a.quantity + 1 : 1 } })
+        const addquantity = await maincart.updateOne({ 'product._id': req.params.id1 }, { $set: { 'product.$.quantity': b._id == req.params.id1 ? b.quantity + 1 : b.quantity } })
+        const addsubtotal = await maincart.updateOne({ 'product._id': req.params.id1 }, { $set: { 'product.$.subtotal': b._id == req.params.id1 ? b.subtotal + b.price : b.subtotal } })
         console.log(addquantity)
         res.json({ 'message': 'sent' })
     } catch (err) {
