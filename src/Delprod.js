@@ -7,7 +7,11 @@ const maincart = require('./Newcartsheme')
 route.route('/:id').delete(async (req, res) => {
     try {
 
-        const filter = await maincart.deleteOne({ 'product._id': req.params.id })
+        const myId = await maincart.findOne({ 'product._id': req.params.id }).exec()
+        const a = myId.product.filter(prev => prev._id == req.params.id)
+        const b = a[0]
+
+        const filter = await maincart.updateOne({ 'product._id': req.params.id }, { $pull: { product: b } })
         console.log(filter)
         res.status(201).json({ 'message': 'deleted' })
 
