@@ -17,7 +17,7 @@ route.route('/:id1/:id2').post(async (req, res) => {
 
         res.status(201).json({ 'message': 'sent' })
     } catch (err) {
-        res.status(500).json({ 'error': err })
+        res.status(500).json(err)
 
     }
 })

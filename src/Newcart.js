@@ -11,7 +11,7 @@ route.route('/').post(async (req, res) => {
 
         const mycountries = await Countrylist.find().exec()
 
-        console.log(mycountries)
+
         const mycart = await maincart.create({
 
             'selected': false,
@@ -22,12 +22,11 @@ route.route('/').post(async (req, res) => {
             { 'proname': 'checkout', 'progess': false },
             { 'proname': 'complete', 'progess': false }],
             'total': 0,
-
             'date': "22/4/2024"
         })
         res.status(201).json({ 'massage': 'sent' })
     } catch (err) {
-        res.status(500).json({ 'err': err })
+        res.status(500).json(err)
 
     }
 

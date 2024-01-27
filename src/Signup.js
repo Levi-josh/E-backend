@@ -29,11 +29,12 @@ route.route('/').post(async (req, res) => {
 
         const mynewusers = await user.create({
             'username': req.body.username,
-            'password': hash
+            'password': hash,
+            'items': []
         })
-        const newjwt = jwt.sign({ _id: mynewusers._id }, process.env.Access_Token, { expiresIn: '10s' })
+        const newjwt = jwt.sign({ _id: mynewusers._id }, process.env.Access_Token)
         console.log(newjwt)
-        res.cookie('jwt', newjwt, { maxAge: 10000 })
+        res.cookie('jwt', newjwt)
         res.status(200).json(mynewusers)
 
     } catch (err) {

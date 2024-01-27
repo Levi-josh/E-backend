@@ -8,7 +8,7 @@ const App = express();
 const cors = require('cors')
 const mongoose = require('mongoose')
 const cookie = require('cookie-parser')
-
+const { Auth } = require('./Authcontrol')
 mongodb();
 
 
@@ -29,7 +29,7 @@ App.use("/itemcart", require("./itemcart"))
 App.use("/countrylist", require("./Country"))
 App.use("/selcountry", require("./selcountry"))
 App.use("/newcart", require("./Newcart"))
-App.use("/addcart", require("./Addcart"))
+App.use("/addcart", Auth, require("./Addcart"))
 App.use("/select", require("./Selected"))
 App.use("/addquan", require("./Addquan"))
 App.use("/redquan", require("./Redquan"))
