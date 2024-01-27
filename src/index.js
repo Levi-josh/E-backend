@@ -7,13 +7,14 @@ const mongodb = require('./dbconnect')
 const App = express();
 const cors = require('cors')
 const mongoose = require('mongoose')
+const cookie = require('cookie-parser')
 
 mongodb();
 
 
 
 const port = process.env.port || 3500;
-
+App.use(cookie())
 App.use(cors())
 
 App.use(express.json())
@@ -34,6 +35,7 @@ App.use("/addquan", require("./Addquan"))
 App.use("/redquan", require("./Redquan"))
 App.use("/delcart", require("./Delcart"))
 App.use("/delprod", require("./Delprod"))
+App.use("/signup", require("./Signup"))
 
 console.log("hello")
 
