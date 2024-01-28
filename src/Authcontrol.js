@@ -33,19 +33,22 @@ const Auth = async (req, res, next) => {
             const newjwt = jwt.verify(token, process.env.Access_Token, async (err, decoded) => {
                 if (err) {
                     console.log(err.message)
+                    next()
                     // throw new Error('unauthorized')
                 } else {
                     console.log(decoded)
+                    next()
                 }
 
             })
 
             res.cookie('jwt', newjwt)
 
-            next()
+
 
         } else {
             // throw new Error('unverified')
+            console.log('unathorized')
         }
 
 
