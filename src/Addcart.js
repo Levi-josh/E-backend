@@ -33,13 +33,13 @@ route.route('/:id1/:id2').post(async (req, res) => {
             res.status(201).json({ 'message': 'sent' })
         }
         else {
-            throw Error({ 'message': 'you must select a cart' })
+            throw new Error('you must select a cart')
         }
 
 
     } catch (err) {
-        console.log(err)
-        res.status(500).json(err)
+
+        res.status(500).json(err.message)
 
     }
 })

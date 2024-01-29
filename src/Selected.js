@@ -26,13 +26,15 @@ route.route('/:id').put(async (req, res) => {
   
   
           }*/
-        for (let findother of findothers) {
-            const filter = await users.findOne({ 'items._id': req.params.id })
-            const newfilter = filter.items.filter(prev => prev._id == req.params.id)
+        const filter = await users.findOne({ 'items._id': req.params.id })
+        const newfilter = filter.items.filter(prev => prev._id == req.params.id)
 
-            console.log(newfilter)
-            const updateselect = { $set: { 'items.$.selected': findother._id == req.params.id ? !newfilter[0].selected : false } }
-            const a = await users.updateOne({ 'items._id': req.params.id }, updateselect)
+
+
+        for (let findother of findothers) {
+            console.log(findother._id == req.params.id)
+            const updateselect = { $set: { 'items.$.selected': findother._id == req.params.id ? !findother.selected : false } }
+            await users.updateOne({ 'items._id': findother._id }, updateselect)
 
 
         }
