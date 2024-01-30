@@ -1,17 +1,19 @@
 const express = require('express')
 const route = express.Router()
 const maincart = require('./Newcartsheme')
+const users = require('./Signupschema')
 
 
-
-route.route('/:id').delete(async (req, res) => {
+route.route('/:id/:id1').delete(async (req, res) => {
     try {
 
-        const myId = await maincart.findOne({ 'product._id': req.params.id }).exec()
-        const a = myId.product.filter(prev => prev._id == req.params.id)
-        const b = a[0]
+        const myId = await users.findOne({ 'items.product._id': req.params.id }).exec()
 
-        const filter = await maincart.updateOne({ 'product._id': req.params.id }, { $pull: { product: b } })
+        const a = myId.items.filter(prev => prev._id == req.params.id1)
+        const b = a[0].product.filter(prev => prev._id == req.params.id)
+        const c = b[0]
+        console.log(c)
+        const filter = await users.updateOne({ 'items._id': req.params.id1 }, { $pull: { 'items.$.product': c } })
         console.log(filter)
         res.status(201).json({ 'message': 'deleted' })
 
