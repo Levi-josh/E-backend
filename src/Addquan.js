@@ -18,13 +18,13 @@ route.route('/:id1/:id2').put(async (req, res) => {
         const d = c[0].product
         const e = d.filter(prev => prev._id == req.params.id1)
 
+        const f = e[0]
+        const addquantity = await users.updateOne({ 'items._id': req.params.id2, 'items.product._id': req.params.id1 }, { $set: { 'items.$.product.$[elem].quantity': f._id == req.params.id1 ? f.quantity + 1 : f.quantity } }, { arrayFilters: [{ 'elem._id': req.params.id1 }] })
+        const addsubtotal = await users.updateOne({ 'items._id': req.params.id2, 'items.product._id': req.params.id1 }, { $set: { 'items.$.product.$[elem].subtotal': f._id == req.params.id1 ? f.subtotal + f.price : f.subtotal } }, { arrayFilters: [{ 'elem._id': req.params.id1 }] })
 
-        const addquantity = await users.updateOne({ 'items.product._id': req.params.id1 }, { $set: { 'items.$.product.$.quantity': e[0]._id == req.params.id1 ? e[0].quantity + 1 : e[0].quantity } })
-        const addsubtotal = await users.updateOne({ 'items.product._id': req.params.id1 }, { $set: { 'items.$.product.$.subtotal': e[0]._id == req.params.id1 ? e[0].subtotal + e[0].price : e[0].subtotal } })
-        console.log(addquantity)
         res.json({ 'message': 'sent' })
     } catch (err) {
-        console.log(err)
+        console.log(err.message)
         res.status(500).json({ 'error': err })
     }
 })
