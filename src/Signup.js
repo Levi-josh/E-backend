@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt')
 route.route('/').post(async (req, res) => {
 
     const error = (err) => {
-        console.log(err.code)
+
         let newerror = { username: '', password: '' }
 
         if (err.message.includes('User validation failed')) {

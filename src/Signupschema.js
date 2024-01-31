@@ -51,7 +51,9 @@ const newusers = new schema({
         required: [true, 'Enter a password'],
         minlength: [6, 'password must be more than 6 characters']
     },
-    items: [maincart]
+    items: [maincart],
+    history: [],
+    favorites: []
 })
 
 

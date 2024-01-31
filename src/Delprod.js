@@ -18,7 +18,7 @@ route.route('/:id/:id1').delete(async (req, res) => {
         res.status(201).json({ 'message': 'deleted' })
 
     } catch (err) {
-        res.status(500).json({ 'error': err })
+        res.status(500).json(err.message)
 
     }
 

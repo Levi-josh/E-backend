@@ -36,6 +36,7 @@ App.use("/redquan", require("./Redquan"))
 App.use("/delcart", require("./Delcart"))
 App.use("/delprod", require("./Delprod"))
 App.use("/signup", require("./Signup"))
+App.use("/login", require("./Login"))
 
 console.log("hello")
 

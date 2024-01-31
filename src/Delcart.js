@@ -10,13 +10,13 @@ route.route('/:id').delete(async (req, res) => {
         const filtered = filter.items.filter(prev => prev._id == req.params.id)
 
         const filter1 = await users.updateOne({ _id: filter._id }, { $pull: { items: filtered[0] } })
-        console.log(filter1)
+
         res.status(201).json({ 'message': 'deleted' })
 
 
     } catch (err) {
-        console.log(err.message)
-        res.status(500).json({ 'error': err })
+
+        res.status(500).json(err.message)
 
     }
 

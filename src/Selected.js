@@ -32,18 +32,16 @@ route.route('/:id').put(async (req, res) => {
 
 
         for (let findother of findothers) {
-            console.log(findother._id == req.params.id)
+
             const updateselect = { $set: { 'items.$.selected': findother._id == req.params.id ? !findother.selected : false } }
             await users.updateOne({ 'items._id': findother._id }, updateselect)
 
 
         }
-        // const findselect = await maincart.updateOne({ _id: req.params.id }, { $set: { 'selected': !filter.selected } })
 
-        //console.log(findselect)
         res.status(201).json({ 'message': 'sent' })
     } catch (err) {
-        console.log(err)
+
         res.status(500).json(err)
 
     }

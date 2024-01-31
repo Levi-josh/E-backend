@@ -47,7 +47,7 @@ route.route('/').post(async (req, res) => {
                     { 'proname': 'checkout', 'progess': false },
                     { 'proname': 'complete', 'progess': false }],
                     'total': 0,
-                    'date': "22/4/2024"
+                    'date': ""
                 }
             }
         })

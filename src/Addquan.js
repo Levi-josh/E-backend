@@ -25,7 +25,7 @@ route.route('/:id1/:id2').put(async (req, res) => {
         res.json({ 'message': 'sent' })
     } catch (err) {
         console.log(err.message)
-        res.status(500).json({ 'error': err })
+        res.status(500).json(err.message)
     }
 })
 module.exports = route
