@@ -17,11 +17,7 @@ const product = new schema({
 
 })
 
-const country = new schema({
-    id: Number,
-    country: String,
-    checked: Boolean
-})
+
 
 const progessbar = new schema({
     id: Number,
@@ -34,10 +30,18 @@ const maincart = new schema({
     selected: Boolean,
     title: String,
     product: [product],
-    country: [country],
+    country: String,
     progressbar: [progessbar],
     total: Number,
-    date: String
+    date: String,
+    itemspurch: Number,
+    shipping: {
+        name: String,
+        price: Number
+    },
+    payment: String,
+    ordercode: String
+
 })
 
 const newusers = new schema({
@@ -54,6 +58,7 @@ const newusers = new schema({
     items: [maincart],
     history: [],
     favorites: []
+
 })
 
 

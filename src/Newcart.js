@@ -32,7 +32,7 @@ route.route('/').post(async (req, res) => {
      }*/
     try {
 
-        const mycountries = await Countrylist.find().exec()
+
 
 
         const mycart = await users.updateOne({ _id: req.body.id }, {
@@ -42,12 +42,16 @@ route.route('/').post(async (req, res) => {
                     'selected': false,
                     'title': req.body.title,
                     'products': [],
-                    'country': mycountries,
+                    'country': '',
                     'progressbar': [{ 'proname': 'shopcart', 'progess': false },
                     { 'proname': 'checkout', 'progess': false },
                     { 'proname': 'complete', 'progess': false }],
                     'total': 0,
-                    'date': ""
+                    'date': "",
+                    'itemspurch': 0,
+                    'shipping': { 'name': '', 'price': '' },
+                    'payment': '',
+                    'ordercode': ''
                 }
             }
         })
