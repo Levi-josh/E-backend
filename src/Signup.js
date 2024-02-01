@@ -8,7 +8,7 @@ route.route('/').post(async (req, res) => {
 
     const error = (err) => {
 
-        let newerror = { username: '', password: '' }
+        let newerror = { username: '', password: '', other: '' }
 
         if (err.message.includes('User validation failed')) {
             Object.values(err.errors).forEach(({ properties }) => {
@@ -18,6 +18,12 @@ route.route('/').post(async (req, res) => {
         }
         if (err.code === 11000) {
             newerror.username = 'this user already exist'
+        }
+        if (err.code == 'EREFUSED') {
+            newerror.other = 'bad network'
+        }
+        if (err.message == 'getaddrinfo ENOTFOUND ac-roubij3-shard-00-00.0fmc2gq.mongodb.net') {
+            newerror.other = 'bad network'
         }
         return newerror
     }
@@ -32,9 +38,9 @@ route.route('/').post(async (req, res) => {
             'password': hash,
             'items': []
         })
-        const newjwt = jwt.sign({ _id: mynewusers._id }, process.env.Access_Token)
+        const newjwt = jwt.sign({ _id: mynewusers._id }, process.env.Access_Token, { expiresIn: '10s' })
         console.log(newjwt)
-        res.cookie('jwt', newjwt)
+        res.cookie('jwt', newjwt, { maxAge: 10000 })
         res.status(200).json(mynewusers)
 
     } catch (err) {

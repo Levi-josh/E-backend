@@ -8,7 +8,7 @@ const Auth = async (req, res, next) => {
 
     const error = (err) => {
         console.log(err.code)
-        let newerror = { username: '', password: '' }
+        let newerror = { other: '', password: '' }
 
         if (err.message.includes('User validation failed')) {
             Object.values(err.errors).forEach(({ properties }) => {
@@ -18,6 +18,9 @@ const Auth = async (req, res, next) => {
         }
         if (err.code === 11000) {
             newerror.username = 'this user already exist'
+        }
+        if (err.message === 'unverified') {
+            newerror.other = 'you dont have access to this,try logging in again '
         }
         return newerror
     }
@@ -30,25 +33,24 @@ const Auth = async (req, res, next) => {
 
         if (token) {
 
-            const newjwt = jwt.verify(token, process.env.Access_Token, async (err, decoded) => {
+            jwt.verify(token, process.env.Access_Token, async (err, decoded) => {
                 if (err) {
-                    console.log(err.message)
-                    next()
-                    // throw new Error('unauthorized')
+
+                    console.log(err)
+                    throw new Error(err)
+
                 } else {
                     console.log(decoded)
+                    const newjwt = jwt.sign({ _id: decoded._id }, process.env.Access_Token, { expiresIn: '10s' })
+                    res.cookie('jwt', newjwt, { maxAge: 10000 })
                     next()
                 }
 
             })
+        }
+        else {
+            throw new Error('unverified')
 
-            res.cookie('jwt', newjwt)
-
-
-
-        } else {
-            // throw new Error('unverified')
-            console.log('unathorized')
         }
 
 
@@ -56,7 +58,8 @@ const Auth = async (req, res, next) => {
     } catch (err) {
         console.log(err.message)
         const showerror = error(err)
-        res.status(500).json(err.message)
+        //console.log(showerror)
+        res.status(500).json(showerror)
     }
 
 
