@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
 
-route.route('/').get(async (req, res) => {
+route.route('/:id').get(async (req, res) => {
 
     const error = (err) => {
 
@@ -20,7 +20,7 @@ route.route('/').get(async (req, res) => {
     try {
 
 
-        const mynewusers = await user.find()
+        const mynewusers = await user.findOne({ _id: req.params.id })
 
         res.status(200).json(mynewusers)
 

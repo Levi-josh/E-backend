@@ -37,6 +37,8 @@ App.use("/delcart", require("./Delcart"))
 App.use("/delprod", require("./Delprod"))
 App.use("/signup", require("./Signup"))
 App.use("/login", require("./Login"))
+App.use("/logout", require("./Signout"))
+App.use("/getuser", require("./Getusers"))
 
 console.log("hello")
 
