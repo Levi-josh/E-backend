@@ -17,7 +17,16 @@ const product = new schema({
 
 })
 
+const paymentmethod = new schema({
+    payname: String,
 
+})
+
+const newship = new schema({
+    name: String,
+    price: Number,
+    checked: Boolean
+})
 
 const progessbar = new schema({
     id: Number,
@@ -35,11 +44,14 @@ const maincart = new schema({
     total: Number,
     date: String,
     itemspurch: Number,
-    shipping: {
-        name: String,
-        price: Number
-    },
+    shipping: [newship],
+    Paymethod: [paymentmethod],
     payment: String,
+    shipvalue: {
+        name: String,
+        price: Number,
+        checked: Boolean
+    },
     ordercode: String
 
 })
