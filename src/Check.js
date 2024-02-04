@@ -2,7 +2,7 @@ const express = require('express')
 const route = express.Router()
 const user = require('./Signupschema')
 
-
+const shortid = require('shortid')
 
 route.route('/:id').put(async (req, res) => {
 
@@ -17,11 +17,18 @@ route.route('/:id').put(async (req, res) => {
 
 
     try {
+        const date = new Date()
+        const newdate = date.toLocaleString()
+        console.log(newdate)
+        const code = shortid.generate()
+        console.log(code)
+        const ordercode = code.slice(6)
+        console.log(ordercode)
+        const result = await user.updateOne({ 'items._id': req.params.id }, { $set: { 'items.$.date': newdate } })
+        const result2 = await user.updateOne({ 'items._id': req.params.id }, { $set: { 'items.$.ordercode': ordercode } })
+        const result1 = await user.updateOne({ 'items._id': req.params.id }, { $set: { 'items.$.selected': false } })
+        res.status(200).json(result)
 
-
-        const mynewusers = await user.findOne({ _id: req.params.id })
-
-        res.status(200).json(mynewusers)
 
     } catch (err) {
         const showerror = error(err)

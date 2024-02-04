@@ -52,7 +52,7 @@ route.route('/').post(async (req, res) => {
                     'shipping': [{ 'name': 'Free shipping', 'price': 0, 'checked': false }, { 'name': 'Express shipping', 'price': 20, 'checked': false }, { 'name': 'Pick up', 'price': 20, 'checked': false }],
                     'paymethod': [{ 'payname': 'Pay by Card Credit' }, { 'payname': 'Paypal' }],
                     'payment': '',
-                    'shipvalue': { 'name': '', 'price': 0 },
+                    'shipvalue': { 'name': '', 'price': 0, 'checked': false },
                     'ordercode': ''
                 }
             }

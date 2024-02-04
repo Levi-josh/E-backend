@@ -4,7 +4,7 @@ const user = require('./Signupschema')
 
 
 
-route.route('/:id/:id1').put(async (req, res) => {
+route.route('/:id').put(async (req, res) => {
 
     const error = (err) => {
 
@@ -19,11 +19,8 @@ route.route('/:id/:id1').put(async (req, res) => {
     try {
 
 
-        const myuser = await user.findOne({ 'items._id': req.params.id })
-        const cart = myuser.items.filter(prev => prev._id == req.params.id)
-        const item = cart[0].shipping.filter(prev => prev._id == req.params.id1)
-        const addquantity = await user.updateOne({ 'items._id': req.params.id }, { $set: { 'items.$.shipvalue': item[0] } })
-        res.status(200).json(mynewusers)
+        const result = await user.updateOne({ 'items._id': req.params.id }, { $set: { 'items.$.selected': true } })
+        res.status(200).json(result)
 
     } catch (err) {
         const showerror = error(err)
