@@ -4,7 +4,7 @@ const user = require('./Signupschema')
 
 
 
-route.route('/:id').put(async (req, res) => {
+route.route('/:id/:id1').put(async (req, res) => {
 
     const error = (err) => {
 
@@ -19,8 +19,9 @@ route.route('/:id').put(async (req, res) => {
     try {
 
 
-        const result = await user.updateOne({ 'items._id': req.params.id }, { $set: { 'items.$.selected': true } })
-        res.status(200).json(result)
+        const result1 = await user.updateOne({ 'items._id': req.params.id, 'items.progressbar._id': req.params.id1 }, { $set: { 'items.$.progressbar.$[elem].progess': true } }, { arrayFilters: [{ 'elem._id': req.params.id1 }] })
+
+        res.status(200).json(result1)
 
     } catch (err) {
         const showerror = error(err)

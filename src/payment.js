@@ -22,7 +22,7 @@ route.route('/:id/:id1').put(async (req, res) => {
         const myuser = await user.findOne({ 'items._id': req.params.id })
         const cart = myuser.items.filter(prev => prev._id == req.params.id)
         const item = cart[0].Paymethod.filter(prev => prev._id == req.params.id1)
-        const result = await user.updateOne({ 'items._id': req.params.id }, { $set: { 'items.$.payment': item[0] } })
+        const result = await user.updateOne({ 'items._id': req.params.id }, { $set: { 'items.$.Payment': item[0] } })
         res.status(200).json(result)
 
     } catch (err) {

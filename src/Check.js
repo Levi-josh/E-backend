@@ -4,7 +4,7 @@ const user = require('./Signupschema')
 
 const shortid = require('shortid')
 
-route.route('/:id').put(async (req, res) => {
+route.route('/:id/:id1').put(async (req, res) => {
 
     const error = (err) => {
 
@@ -18,19 +18,21 @@ route.route('/:id').put(async (req, res) => {
 
     try {
         const date = new Date()
-        const newdate = date.toLocaleString()
-        console.log(newdate)
+        const newdate = date.toDateString()
+
         const code = shortid.generate()
-        console.log(code)
-        const ordercode = code.slice(6)
-        console.log(ordercode)
+
+        console.log('Conditions:', { 'items._id': req.params.id, 'items.progressbar._id': req.params.id1 });
+
         const result = await user.updateOne({ 'items._id': req.params.id }, { $set: { 'items.$.date': newdate } })
-        const result2 = await user.updateOne({ 'items._id': req.params.id }, { $set: { 'items.$.ordercode': ordercode } })
-        const result1 = await user.updateOne({ 'items._id': req.params.id }, { $set: { 'items.$.selected': false } })
-        res.status(200).json(result)
+        const result2 = await user.updateOne({ 'items._id': req.params.id }, { $set: { 'items.$.ordercode': code } })
+        const result1 = await user.updateOne({ 'items._id': req.params.id, 'items.progressbar._id': req.params.id1 }, { $set: { 'items.$.progressbar.$[elem].progess': true } }, { arrayFilters: [{ 'elem._id': req.params.id1 }] })
+
+        res.status(200).json(result1)
 
 
     } catch (err) {
+
         const showerror = error(err)
         res.status(500).json(showerror)
     }

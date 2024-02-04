@@ -39,6 +39,11 @@ App.use("/signup", require("./Signup"))
 App.use("/login", require("./Login"))
 App.use("/logout", require("./Signout"))
 App.use("/getuser", require("./Getusers"))
+App.use("/shopcart", require("./Shopcart"))
+App.use("/checkcart", require("./Check"))
+App.use("/complete", require("./Complete"))
+App.use("/payment", require("./payment"))
+App.use("/shipping", require("./Shipping"))
 
 console.log("hello")
 

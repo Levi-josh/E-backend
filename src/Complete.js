@@ -25,6 +25,7 @@ route.route('/:id/:id1').put(async (req, res) => {
         res.status(200).json(result1)
 
     } catch (err) {
+        console.log(err.message)
         const showerror = error(err)
         res.status(500).json(showerror)
     }
