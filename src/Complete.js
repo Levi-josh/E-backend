@@ -22,7 +22,11 @@ route.route('/:id/:id1').put(async (req, res) => {
 
         const myuser = await user.findOne({ 'items._id': req.params.id })
         const cart = myuser.items.filter(prev => prev._id == req.params.id)
-        const result = await user.updateOne({ _id: req.params.id1 }, { $push: { favorites: cart[0] } })
+
+        const c = cart[0]
+        const d = { ...c, time: '2pm' }
+        console.log(d)
+        const result = await user.updateOne({ _id: req.params.id1 }, { $push: { history: cart[0] } })
         const filter1 = await user.updateOne({ _id: req.params.id1 }, { $pull: { items: cart[0] } })
         console.log(filter1)
         res.status(200).json(result)

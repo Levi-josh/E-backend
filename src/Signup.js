@@ -32,14 +32,21 @@ route.route('/').post(async (req, res) => {
     try {
         const salt = await bcrypt.genSalt()
         const hash = await bcrypt.hash(req.body.password, salt)
+        const date = new Date()
+        const newtime = date.toLocaleTimeString()
+
 
         const mynewusers = await user.create({
             'username': req.body.username,
             'password': hash,
-            'items': []
+            'items': [],
+            'history': [],
+            'Notification': []
         })
+        const message = `Hi ${mynewusers.username},welcome to Glamour Grove one of the best e-commerce shopping app which offers your the best services at a discount rate,do well to read more about as in our about page. `
         const newjwt = jwt.sign({ _id: mynewusers._id }, process.env.Access_Token, { expiresIn: '1d' })
-        console.log(newjwt)
+        await user.updateOne({ _id: mynewusers._id }, { $push: { Notification: { 'note': message, 'time': newtime } } })
+
         res.cookie('jwt', newjwt, { maxAge: 86400000 })
         res.status(200).json(mynewusers)
 

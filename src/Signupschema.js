@@ -16,7 +16,10 @@ const product = new schema({
 
 
 })
-
+const notify = new schema({
+    note: String,
+    time: String
+})
 const paymentmethod = new schema({
     payname: String,
 
@@ -52,7 +55,8 @@ const maincart = new schema({
         price: Number,
         checked: Boolean
     },
-    ordercode: String
+    ordercode: String,
+    time: String
 
 })
 
@@ -68,8 +72,9 @@ const newusers = new schema({
         minlength: [6, 'password must be more than 6 characters']
     },
     items: [maincart],
-    history: [],
-    favorites: []
+    history: [maincart],
+
+    Notification: [notify]
 
 })
 
