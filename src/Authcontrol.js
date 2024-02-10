@@ -41,8 +41,8 @@ const Auth = async (req, res, next) => {
 
                 } else {
                     console.log(decoded)
-                    const newjwt = jwt.sign({ _id: decoded._id }, process.env.Access_Token, { expiresIn: '1d' })
-                    res.cookie('jwt', newjwt, { maxAge: 86400000 })
+                    const newjwt = jwt.sign({ _id: decoded._id }, process.env.Access_Token)
+                    res.cookie('jwt', newjwt)
                     next()
                 }
 

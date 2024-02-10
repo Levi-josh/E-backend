@@ -10,6 +10,7 @@ route.route('/').post(async (req, res) => {
         'rating': req.body.rating,
         'price': req.body.price,
         'description': req.body.description
+
     })
     res.status(200).json(mycartitems)
 

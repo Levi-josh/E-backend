@@ -42,9 +42,9 @@ route.route('/').post(async (req, res) => {
 
             const hash = await bcrypt.compare(req.body.password, myusers.password)
             if (hash) {
-                const newjwt = jwt.sign({ _id: myusers._id }, process.env.Access_Token, { expiresIn: '1d' })
+                const newjwt = jwt.sign({ _id: myusers._id }, process.env.Access_Token)
                 console.log(newjwt)
-                res.cookie('jwt', newjwt, { maxAge: 86400000 })
+                res.cookie('jwt', newjwt)
                 res.status(200).json(myusers)
             } else {
                 throw new Error('incorrect password')
