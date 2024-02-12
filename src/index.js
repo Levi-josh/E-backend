@@ -1,7 +1,8 @@
+require('dotenv').config()
 const path = require('path')
 
 const fs = require('fs')
-require('dotenv').config()
+
 const express = require('express')
 const mongodb = require('./dbconnect')
 const App = express();
@@ -14,10 +15,15 @@ mongodb();
 
 
 const port = process.env.port || 3500;
-App.use(cookie())
+
 App.use(cors())
 
 App.use(express.json())
+App.use(cookie())
+
+App.use("/signup", require("./Signup"))
+App.use("/login", require("./Login"))
+
 
 App.use("/items", require("./Items"))
 App.use("/getitems", require("./Recieve"))
@@ -28,15 +34,14 @@ App.use("/cartitems", require("./Cart"))
 App.use("/itemcart", require("./itemcart"))
 App.use("/countrylist", require("./Country"))
 App.use("/selcountry", require("./selcountry"))
-App.use("/newcart", require("./Newcart"))
+App.use("/newcart", Auth, require("./Newcart"))
 App.use("/addcart", require("./Addcart"))
 App.use("/select", require("./Selected"))
 App.use("/addquan", require("./Addquan"))
 App.use("/redquan", require("./Redquan"))
 App.use("/delcart", require("./Delcart"))
 App.use("/delprod", require("./Delprod"))
-App.use("/signup", require("./Signup"))
-App.use("/login", require("./Login"))
+
 App.use("/logout", require("./Signout"))
 App.use("/getuser", require("./Getusers"))
 App.use("/shopcart", require("./Shopcart"))

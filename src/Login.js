@@ -42,10 +42,10 @@ route.route('/').post(async (req, res) => {
 
             const hash = await bcrypt.compare(req.body.password, myusers.password)
             if (hash) {
-                const newjwt = jwt.sign({ _id: myusers._id }, process.env.Access_Token)
+                const newjwt = jwt.sign({ _id: myusers._id }, process.env.Access_Token, { expiresIn: '2 days' })
                 console.log(newjwt)
-                res.cookie('jwt', newjwt)
-                res.status(200).json(myusers)
+                res.cookie('jwt', newjwt, { maxAge: 100000 })
+                res.status(200).json(newjwt)
             } else {
                 throw new Error('incorrect password')
             }
@@ -53,27 +53,10 @@ route.route('/').post(async (req, res) => {
             throw new Error('there is no user with that name')
         }
 
-        /* const hash = bcrypt.compare(req.body.password,)
- 
-         //  const mynewusers = await user.findOne({_id:})
-         if (token) {
- 
-             const newjwt = jwt.verify(token, process.env.Access_Token, { expiresIn: '10s' })
- 
-         } else {
-             throw new Error('unverified')
-         }
- 
-         console.log(newjwt)
-         res.cookie('jwt', newjwt, { maxAge: 10000 })
-         res.status(200).json(mynewusers)*/
+
 
     } catch (err) {
-        console.log(err)
-        console.log(err.errors)
-        console.log(err.message)
-        console.log(err.code)
-        console.log(err.Error)
+
         const showerror = error(err)
         res.status(500).json(showerror)
     }

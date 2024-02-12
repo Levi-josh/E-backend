@@ -30,6 +30,9 @@ const Auth = async (req, res, next) => {
 
         const token = req.cookies.jwt
         console.log(token)
+        const token1 = req.cookies
+        console.log(token1)
+
 
         if (token) {
 
