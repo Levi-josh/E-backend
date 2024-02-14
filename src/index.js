@@ -10,7 +10,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const cookie = require('cookie-parser')
 const { Auth } = require('./Authcontrol')
-mongodb();
+
 
 
 
@@ -58,7 +58,20 @@ App.use(function (err, req, res, next) {
 })
 
 
-mongoose.connection.once('open', () => {
-    console.log("connected to mongodb")
-    App.listen(port, () => console.log(`port is running on ${port}`))
-})
+// mongoose.connection.once('open', () => {
+//     console.log("connected to mongodb")
+//     App.listen(port, () => console.log(`port is running on ${port}`))
+// })
+
+const startServer = async () => {
+    try {
+        await mongodb();
+        console.log("connected")
+
+        App.listen(port, () => console.log(`port is running on ${port}`))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+startServer();
