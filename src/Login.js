@@ -33,7 +33,7 @@ route.route('/').post(async (req, res) => {
 
 
     try {
-        const token = req.cookies.jwt
+
         const myusers = await user.findOne({
             'username': req.body.username
         })

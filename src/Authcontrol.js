@@ -43,8 +43,8 @@ const Auth = async (req, res, next) => {
 
                 } else {
                     console.log(decoded)
-                    const newjwt = jwt.sign({ _id: decoded._id }, process.env.Access_Token)
-                    res.cookie('jwt', newjwt)
+                    // const newjwt = jwt.sign({ _id: decoded._id }, process.env.Access_Token)
+                    // res.cookie('jwt', newjwt)
                     next()
                 }
 
@@ -60,7 +60,6 @@ const Auth = async (req, res, next) => {
     } catch (err) {
         console.log(err.message)
         const showerror = error(err)
-        //console.log(showerror)
         res.status(500).json(showerror)
     }
 
