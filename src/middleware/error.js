@@ -33,6 +33,9 @@ const  errorhandler= async(err, req, res, next)=>{
     if (err.message == 'you must select a cart') {
         newerror.other = 'you must select a cart'
     }
+    if (err.message == 'No token found!') {
+        newerror.other = 'No token found!'
+    }
     
         res.status(500).json(newerror)
 
