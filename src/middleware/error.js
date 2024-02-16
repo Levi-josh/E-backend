@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 
-const  errorhandler= async(err, req, res, next)=>{
+const errorhandler = async (err, req, res, next) => {
+    console.log(err.message)
      let newerror = { username: '', password: '', other: '' }
 
         if (err.message.includes('User validation failed')) {
@@ -35,6 +36,9 @@ const  errorhandler= async(err, req, res, next)=>{
     }
     if (err.message == 'No token found!') {
         newerror.other = 'No token found!'
+    }
+    if (err.message == 'jwt expired') {
+        newerror.other = 'you\'ve been logged out'
     }
     
         res.status(500).json(newerror)

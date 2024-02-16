@@ -2,14 +2,17 @@ const jwt = require('jsonwebtoken')
 
 const Auth = async (req, res, next) => {
     try {
-        const token = req.cookies.jwt
-        if (!token) throw new Error("No token found!");
+       
+        const authHeader = req.headers['authorization']
 
-        jwt.verify(token, process.env.Access_Token, async (err, decoded) => {
-            if (err) throw new Error(err);
-            next();
-        })
+        if (!authHeader) throw new Error('No token found!')
+        
+        const token = authHeader.split(' ')[1]
 
+         jwt.verify(token, process.env.Access_Token, async (err, decoded) => {
+    if (err) next(err);
+       next()
+         })
     } catch (err) {
         next(err);
     }
