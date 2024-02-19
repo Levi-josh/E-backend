@@ -10,7 +10,7 @@ const {complete1, complete2, shopcart, shipping, payment, redquan, addquan, addc
 
 route.route('/addquan/:id1/:id2').put(addquan)
 
-route.route('/addcart/:id1/:id2').post(Auth, addcart)
+route.route('/addcart/:id1/:id2').post(addcart)
 
 route.route('/checkcart/:id/:id1').put(checkout)
 
@@ -24,13 +24,13 @@ route.route('/delcart/:id').delete(delcart)
 
 route.route('/delprod/:id/:id1').delete(delproduct)
 
-route.route('/getuser/:id').get(Auth, getuser)
+route.route('/getuser/:id').get(getuser)
 
 route.route('/itemcart').get(itemcart)
 
 route.route('/login').post(login)
 
-route.route('/newcart').post(Auth, newcart)
+route.route('/newcart').post(newcart)
 
 route.route('/newcol').get(newcol)
 
