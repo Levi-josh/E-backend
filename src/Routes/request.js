@@ -1,58 +1,82 @@
-const express = require('express')
-const route = express.Router()
-const { Auth } = require('../middleware/Authcontrol')
+const express = require("express");
+const route = express.Router();
+const { Auth } = require("../middleware/Authcontrol");
 
-const { getuser, newcol, newdemo, selcountry,itemcart, Recieve, getcountries } = require('../controller/api')
+const {
+	getuser,
+	newcol,
+	newdemo,
+	selcountry,
+	itemcart,
+	Recieve,
+	getcountries,
+} = require("../controller/api");
 
-const { login, signup, logout } = require('../controller/auth')
+const { login, signup, logout } = require("../controller/auth");
 
-const {complete1, complete2, shopcart, shipping, payment, redquan, addquan, addcart, newcart,selected,checkout,delcart,delproduct}=require('../controller/cart')
+const {
+	complete1,
+	complete2,
+	shopcart,
+	shipping,
+	payment,
+	redquan,
+	addquan,
+	addcart,
+	newcart,
+	selected,
+	checkout,
+	delcart,
+	delproduct,
+	getcart,
+} = require("../controller/cart");
 
-route.route('/addquan/:id1/:id2').put(addquan)
+route.route("/logout").get(logout);
 
-route.route('/addcart/:id1/:id2').post(addcart)
+route.route("/signup").post(signup);
 
-route.route('/checkcart/:id/:id1').put(checkout)
+route.route("/addquan/:id1/:id2").put(addquan);
 
-route.route('/complete/:id/:id1').put(complete1)
+route.route("/addcart/:id1/:id2").post(addcart);
 
-route.route('/complete/:id/:id1').delete(complete2)
+route.route("/checkcart/:id/:id1").put(checkout);
 
-route.route('/countrylist').get(getcountries)
+route.route("/complete/:id/:id1").put(complete1);
 
-route.route('/delcart/:id').delete(delcart)
+route.route("/complete/:id/:id1").delete(complete2);
 
-route.route('/delprod/:id/:id1').delete(delproduct)
+route.route("/countrylist").get(getcountries);
 
-route.route('/getuser/:id').get(getuser)
+route.route("/delcart/:id").delete(delcart);
 
-route.route('/itemcart').get(itemcart)
+route.route("/delprod/:id/:id1").delete(delproduct);
 
-route.route('/login').post(login)
+route.route("/getuser/:id").get(getuser);
 
-route.route('/newcart').post(newcart)
+route.route("/getcart/:id").get(getcart);
 
-route.route('/newcol').get(newcol)
+route.route("/itemcart").get(itemcart);
 
-route.route('/getdemo').get(newdemo)
+route.route("/login").post(login);
 
-route.route('/payment/:id/:id1').put(payment)
+route.route("/newcart").post(newcart);
 
-route.route('/getitems').get(Recieve)
+route.route("/newcol").get(newcol);
 
-route.route('/redquan/:id1/:id2').put(redquan)
+route.route("/getdemo").get(newdemo);
 
-route.route('/selcountry').put(selcountry)
+route.route("/payment/:id/:id1").put(payment);
 
-route.route('/select/:id').put(selected)
+route.route("/getitems").get(Recieve);
 
-route.route('/shipping/:id/:id1').put(shipping)
+route.route("/redquan/:id1/:id2").put(redquan);
 
-route.route('/shopcart/:id/:id1').put(shopcart)
+route.route("/selcountry").put(selcountry);
 
-route.route('/logout').get(logout)
+route.route("/select/:id").put(selected);
 
-route.route('/signup').post(signup)
+route.route("/shipping/:id/:id1").put(shipping);
 
+route.route("/shopcart/:id/:id1").put(shopcart);
 
-module.exports = route
+module.exports = route;
