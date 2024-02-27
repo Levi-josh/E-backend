@@ -197,7 +197,7 @@ const selected = async (req, res, next) => {
 			const updateselect = {
 				$set: {
 					"items.$.selected":
-						findother._id == req.params.id ? !findother.selected : false,
+						findother._id == req.params.id ? true : false,
 				},
 			};
 			await users.updateOne({ "items._id": findother._id }, updateselect);
@@ -213,10 +213,27 @@ const shipping = async (req, res, next) => {
 		const myuser = await users.findOne({ "items._id": req.params.id });
 		const cart = myuser.items.filter((prev) => prev._id == req.params.id);
 		const item = cart[0].shipping.filter((prev) => prev._id == req.params.id1);
+		const shipitems = cart[0].shipping
 		const result = await users.updateOne(
 			{ "items._id": req.params.id },
 			{ $set: { "items.$.shipvalue": item[0] } }
 		);
+	
+		for (let shipitem of shipitems) {
+			const updateselect = {
+				$set: {
+					"items.$.shipping.$[elem].checked":shipitem._id == req.params.id1 ? true : false,
+					
+					
+				},
+			}
+			const updateselect2 = {
+			 arrayFilters: [{ "elem._id":shipitem._id }] 
+			}
+		
+			const a = await users.updateOne({ "items._id": req.params.id }, updateselect, updateselect2);
+			console.log(a)
+		}
 		res.status(200).json({ message: "shipping option selected" });
 	} catch (err) {
 		next(err);

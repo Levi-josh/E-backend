@@ -5,6 +5,7 @@ const schema = mongoose.Schema;
 const countrylist = new schema({
     id: Number,
     country: String,
+    checked:Boolean
 
 })
 
