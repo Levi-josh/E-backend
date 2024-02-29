@@ -19,6 +19,25 @@ const getuser = async (req, res,next) => {
        next(err)
     }
 }
+const getnotification = async (req, res,next) => {
+    try {
+        const mynote = await users.findOne({ _id: req.params.id })
+        const newnote = mynote.Notification.filter(prev => prev._id == req.params.id1)
+        console.log(Date.now())
+        res.status(200).json(newnote[0])
+    } catch (err) {
+       next(err)
+    }
+} 
+const gethistory = async (req, res,next) => {
+    try {
+        const mynote = await users.findOne({ _id: req.params.id })
+        const newnote = mynote.history.filter(prev => prev._id == req.params.id1)
+        res.status(200).json(newnote[0])
+    } catch (err) {
+       next(err)
+    }
+} 
 
 const newdemo = async (req, res,next) => {
     try {
@@ -71,4 +90,4 @@ const selcountry = async (req, res,next) => {
 
 
 
-module.exports = {getuser,newcol, newdemo, selcountry,itemcart, Recieve, getcountries }
+module.exports = {getuser,newcol, newdemo, selcountry,itemcart, Recieve, getcountries,gethistory,getnotification }

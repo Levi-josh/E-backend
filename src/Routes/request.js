@@ -10,6 +10,8 @@ const {
 	itemcart,
 	Recieve,
 	getcountries,
+	gethistory,
+	getnotification
 } = require("../controller/api");
 
 const { login, signup, logout } = require("../controller/auth");
@@ -78,5 +80,10 @@ route.route("/select/:id").put(selected);
 route.route("/shipping/:id/:id1").put(shipping);
 
 route.route("/shopcart/:id/:id1").put(shopcart);
+
+route.route("/gethistory/:id/:id1").get(gethistory);
+
+route.route("/getnote/:id/:id1").get(getnotification);
+
 
 module.exports = route;
