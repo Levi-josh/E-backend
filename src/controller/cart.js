@@ -138,7 +138,7 @@ const payment = async (req, res, next) => {
 		const item = cart[0].Paymethod.filter((prev) => prev._id == req.params.id1);
 		const result = await users.updateOne(
 			{ "items._id": req.params.id },
-			{ $set: { "items.$.Payment": item[0] } }
+			{ $set: { "items.$.payment": item[0] } }
 		);
 		res.status(200).json({ message: "payment selected" });
 	} catch (err) {
@@ -200,6 +200,7 @@ const selected = async (req, res, next) => {
 						findother._id == req.params.id ? true : false,
 				},
 			};
+			console.log(findother.selected)
 			await users.updateOne({ "items._id": findother._id }, updateselect);
 		}
 		res.status(201).json({ message: "Cart selected" });

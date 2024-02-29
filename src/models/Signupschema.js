@@ -22,7 +22,7 @@ const notify = new schema({
 })
 const paymentmethod = new schema({
     payname: String,
-
+checked:Boolean
 })
 
 const newship = new schema({
