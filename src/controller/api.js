@@ -23,7 +23,6 @@ const getnotification = async (req, res,next) => {
     try {
         const mynote = await users.findOne({ _id: req.params.id })
         const newnote = mynote.Notification.filter(prev => prev._id == req.params.id1)
-        console.log(Date.now())
         res.status(200).json(newnote[0])
     } catch (err) {
        next(err)
@@ -50,7 +49,7 @@ const newdemo = async (req, res,next) => {
 
 const newcol = async (req, res, next) => {
     try {
-           const mynewcol = await newarrive.find()
+    const mynewcol = await newarrive.find()
     res.status(200).json(mynewcol) 
     } catch (err) {
        next(err) 
@@ -78,10 +77,8 @@ const Recieve = async (req, res, next) => {
 const selcountry = async (req, res,next) => {
     try {
         const newdata = await Countrylist.findOne({ _id: req.body.id })
-     
         const a =  await users.updateOne({ 'items._id': req.body.id1 }, {$set:{'items.$.country': newdata.country}
        })
-        console.log(a)
         res.status(201).json(newdata)
     } catch (err) {
       next(err)

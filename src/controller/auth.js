@@ -12,7 +12,7 @@ const login = async (req, res, next) => {
             if (hash) {
                 const newjwt = jwt.sign({ _id: myusers._id }, process.env.Access_Token,/* { expiresIn: '2 days' }*/)
 
-                res.status(200).json({'Accesss_Token':newjwt})
+                res.status(200).json({'Accesss_Token':newjwt,'UserId':myusers._id})
             } else {
                 throw new Error('incorrect password')
             }
