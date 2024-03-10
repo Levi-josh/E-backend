@@ -1,6 +1,8 @@
 const Getitem = require('../models/demoscheme')
 const users = require('../models/Signupschema')
 const Countrylist = require('../models/countryschem')
+const webpush = require('web-push')
+const { json } = require('express')
 
 const getcountries = async (req, res,next) => {
     try {
@@ -84,7 +86,19 @@ const selcountry = async (req, res,next) => {
       next(err)
     }
 }
+const subscribe = async (req, res,next) => {
+    try {
+        const subscription = req.body;
+        res.status(201).json({})
+        const payload = json.stringify({title:'push test'})
+        webpush.sendNotification(subscription,payload).catch(err=>console.log(err))
+       }
+  
+     catch (err) {
+      next(err)
+    }
+}
 
 
 
-module.exports = {getuser,newcol, newdemo, selcountry,itemcart, Recieve, getcountries,gethistory,getnotification }
+module.exports = {getuser,newcol,subscribe, newdemo, selcountry,itemcart, Recieve, getcountries,gethistory,getnotification }

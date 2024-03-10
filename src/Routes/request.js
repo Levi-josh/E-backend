@@ -11,11 +11,12 @@ const {
 	Recieve,
 	getcountries,
 	gethistory,
-	getnotification
+	getnotification,
+	 
 } = require("../controller/api");
 
 const { login, signup, logout } = require("../controller/auth");
-
+const {sendnote,subscribe}= require('../controller/Pushnote')
 const {
 	complete1,
 	complete2,
@@ -84,6 +85,8 @@ route.route("/shopcart/:id/:id1").put(shopcart);
 route.route("/gethistory/:id/:id1").get(gethistory);
 
 route.route("/getnote/:id/:id1").get(getnotification);
+route.route("/subscribe ").post(subscribe );
+route.route('/send-notification/:userId').post(sendnote );
 
 
 module.exports = route;
