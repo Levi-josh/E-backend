@@ -1,11 +1,11 @@
 require('dotenv').config()
-const webPush = require('web-push');
+const webpush = require('web-push');
 const express = require('express')
 const mongodb = require('./utils/dbconnect')
 const App = express();
 const cors = require('cors')
 const cookie = require('cookie-parser');
-// const bodyparser= require('body-parser');
+const bodyparser= require('body-parser');
 const errorhandler = require("./middleware/error")
 const routes = require('./Routes/request');
 
@@ -21,7 +21,7 @@ webpush.setVapidDetails(
 App.use(cors())
 App.use(express.json())
 App.use(cookie())
-// App.use(bodyparser.json())
+App.use(bodyparser.json())
 App.use(routes)
 App.use(errorhandler);
 
