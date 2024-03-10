@@ -85,8 +85,10 @@ route.route("/shopcart/:id/:id1").put(shopcart);
 route.route("/gethistory/:id/:id1").get(gethistory);
 
 route.route("/getnote/:id/:id1").get(getnotification);
-route.route("/subscribe").post(subscribe );
-route.route('/send-notification/:userId').post(sendnote );
+
+route.route("/subscribe").post(subscribe);
+
+route.route('/send-notification/:userId').post(sendnote);
 
 
 module.exports = route;
