@@ -136,10 +136,12 @@ const payment = async (req, res, next) => {
 		const myuser = await users.findOne({ "items._id": req.params.id });
 		const cart = myuser.items.filter((prev) => prev._id == req.params.id);
 		const item = cart[0].Paymethod.filter((prev) => prev._id == req.params.id1);
+		console.log(item)
 		const result = await users.updateOne(
 			{ "items._id": req.params.id },
-			{ $set: { "items.$.payment": item[0] } }
+			{ $set: { "items.$.payment": item[0].payname } }
 		);
+		console.log(result)
 		res.status(200).json({ message: "payment selected" });
 	} catch (err) {
 		next(err);
