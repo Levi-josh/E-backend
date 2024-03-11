@@ -44,7 +44,7 @@ const signup = async (req, res, next) => {
 
         await users.updateOne({ _id: mynewusers._id }, { $push: { Notification: { 'note': message, 'time': newtime } } })
         const newjwt = jwt.sign({ _id: mynewusers._id }, process.env.Access_Token,/* { expiresIn: '2 days' }*/)
-        res.status(200).json({'Accesss_Token':newjwt})
+        res.status(200).json({'Accesss_Token':newjwt,'UserId':mynewusers._id})
 
     } catch (err) {
         next(err)
