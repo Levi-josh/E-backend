@@ -3,6 +3,7 @@ const webPush = require('web-push');
 const subscriptions = new Map();
 
 const subscribe = async(req, res) => {
+    console.log('ran')
   const { userId, subscription } = req.body;
   subscriptions.set(userId, subscription);
   res.status(201).json({});
