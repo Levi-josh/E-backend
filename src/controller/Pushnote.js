@@ -21,6 +21,7 @@ const sendnote = async(req, res) => {
     notification: {
       title: 'Push Notification',
       body: 'This is a push notification for you!',
+      icon:'https://img.freepik.com/free-photo/lot-different-clothes-hanging-wardrobe_181624-16122.jpg?size=626&ext=jpg&ga=GA1.1.103364066.1699032278&semt=sph'
     },
   };
 
