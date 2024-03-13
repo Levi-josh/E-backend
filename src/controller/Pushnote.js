@@ -38,6 +38,8 @@ const sendnote2 = async(req, res) => {
   if (!subscription) {
     return res.status(404).json({ error: 'User not found' });
   }
+  const date = new Date()
+  const newtime = date.toLocaleTimeString()
   const message =`Your cart has been received and your goods are expected to arrive in your location in the next three days.please do not forget to rate our services even though we dont have that feature yet lol.`
   const notificationPayload = {
     notification: {

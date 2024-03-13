@@ -299,10 +299,15 @@ const complete1 = async (req, res, next) => {
 	try {
 		const myuser = await users.findOne({ "items._id": req.params.id });
 		const cart = myuser.items.filter((prev) => prev._id == req.params.id);
+		const message =`Your cart ${cart[0].title} has been received and your goods are expected to arrive in your location in the next three days.please do not forget to rate our services even though we dont have that feature yet lol.`
+		const date = new Date()
+		const newtime = date.toLocaleTimeString()
 		const result = await users.updateOne(
 			{ _id: req.params.id1 },
 			{ $push: { history: cart[0] } }
 		);
+		const myres = await users.updateOne({ _id:req.params.id1}, { $push: { Notification: { 'note': message, 'time': newtime } } })
+		console.log(myres)
 		res.status(200).json({ message: "completed" });
 	} catch (err) {
 		next(err);
@@ -314,12 +319,10 @@ const complete2 = async (req, res, next) => {
 	try {
 		const myuser = await users.findOne({ "items._id": req.params.id });
 		const cart = myuser.items.filter((prev) => prev._id == req.params.id);
-		const message =`Your cart ${cart[0].title} has been received and your goods are expected to arrive in your location in the next three days.please do not forget to rate our services even though we dont have that feature yet lol.`
 		const filter1 = await users.updateOne(
 			{ _id: req.params.id1 },
 			{ $pull: { items: cart[0] } }
 		);
-		await users.updateOne({ _id: myuser._id}, { $push: { Notification: { 'note': message, 'time': newtime } } })
 		res.status(200).json({ message: "completed" });
 	} catch (err) {
 		next(err);
