@@ -16,7 +16,7 @@ const {
 } = require("../controller/api");
 
 const { login, signup, logout } = require("../controller/auth");
-const {sendnote,subscribe}= require('../controller/Pushnote')
+const {sendnote,subscribe,sendnote2}= require('../controller/Pushnote')
 const {
 	complete1,
 	complete2,
@@ -89,6 +89,8 @@ route.route("/getnote/:id/:id1").get(getnotification);
 route.route("/subscribe").post(subscribe);
 
 route.route('/send-notification/:userId').post(sendnote);
+
+route.route('/send-notification2/:userId').post(sendnote2);
 
 
 module.exports = route;
