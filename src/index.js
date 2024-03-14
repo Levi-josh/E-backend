@@ -20,7 +20,7 @@ webpush.setVapidDetails(
 
   
 
-App.use(cors({origin: 'http://localhost:3000'}))
+App.use(cors({origin:['http://localhost:3000','https://my-commerce.onrender.com']}))
 App.use(express.json())
 App.use(cookie())
 App.use(bodyparser.json())
