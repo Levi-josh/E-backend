@@ -24,6 +24,16 @@ const addcart = async (req, res, next) => {
 			},
 			{ arrayFilters: [{ "elem._id": req.params.id2 }] }
 		);
+		const addsubtotal = await users.updateOne(
+			{ "items._id": req.params.id1, "items.product._id": req.params.id2 },
+			{
+				$set: {
+					"items.$.product.$[elem].subtotal":
+						d._id == req.params.id2 ? d.subtotal + d.price : d.subtotal,
+				},
+			},
+			{ arrayFilters: [{ "elem._id": req.params.id2 }] }
+		);
 		res.status(201).json({ message: "cart item added" });
 		}
 		
