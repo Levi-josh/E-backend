@@ -10,13 +10,31 @@ const addcart = async (req, res, next) => {
 			.exec();
 		const a = newdata1.items.filter((prev) => prev._id == req.params.id1);
 		const b = a[0];
-		if (b.selected) {
+		const c = b.product.filter(prev=>prev._id==req.params.id2)
+		console.log(c)
+		if(b.selected && c.length>0){
+		const d = c[0];
+		const addquantity = await users.updateOne(
+			{ "items._id": req.params.id1, "items.product._id": req.params.id2 },
+			{
+				$set: {
+					"items.$.product.$[elem].quantity":
+						d._id == req.params.id2 ? d.quantity + 1 : d.quantity,
+				},
+			},
+			{ arrayFilters: [{ "elem._id": req.params.id2 }] }
+		);
+		res.status(201).json({ message: "cart item added" });
+		}
+		
+		if (b.selected && c.length===0) {
 			await users.updateOne(
 				{ "items._id": req.params.id1 },
 				{ $push: { "items.$.product": newdata } }
 			);
 			res.status(201).json({ message: "cart item added" });
-		} else {
+		}
+		if(!b.selected){
 			throw new Error("you must select a cart");
 		}
 	} catch (err) {
