@@ -15,7 +15,7 @@ const addcart = async (req, res, next) => {
 		if(b.selected && c.length>0){
 		const d = c[0];
 		const addquantity = await users.updateOne(
-			{ "items._id": req.params.id1, "items.product._id": req.params.id2 },
+			{ "items._id": req.params.id1},
 			{
 				$set: {
 					"items.$.product.$[elem].quantity":
@@ -25,7 +25,7 @@ const addcart = async (req, res, next) => {
 			{ arrayFilters: [{ "elem._id": req.params.id2 }] }
 		);
 		const addsubtotal = await users.updateOne(
-			{ "items._id": req.params.id1, "items.product._id": req.params.id2 },
+			{ "items._id": req.params.id1 },
 			{
 				$set: {
 					"items.$.product.$[elem].subtotal":
@@ -34,7 +34,10 @@ const addcart = async (req, res, next) => {
 			},
 			{ arrayFilters: [{ "elem._id": req.params.id2 }] }
 		);
-		res.status(201).json({ message: "cart item added" });
+		console.log(addquantity)
+		console.log(d._id == req.params.id2 ? d.quantity + 1 : d.quantity)
+		console.log(addsubtotal)
+		res.status(201).json({ message: "cart item added2" });
 		}
 		
 		if (b.selected && c.length===0) {
@@ -42,7 +45,7 @@ const addcart = async (req, res, next) => {
 				{ "items._id": req.params.id1 },
 				{ $push: { "items.$.product": newdata } }
 			);
-			res.status(201).json({ message: "cart item added" });
+			res.status(201).json({ message: "cart item added1" });
 		}
 		if(!b.selected){
 			throw new Error("you must select a cart");
@@ -143,8 +146,8 @@ const newcart = async (req, res, next) => {
 							{ name: "Pick up", price: 20, checked: false },
 						],
 						Paymethod: [
-							{ payname: "Pay by Card Credit" },
-							{ payname: "Paypal" },
+							{ payname: "Pay by Card Credit",checked:false },
+							{ payname: "Paypal",checked:false },
 						],
 						payment: "",
 						shipvalue: { name: "", price: 0, checked: false },
@@ -164,12 +167,25 @@ const payment = async (req, res, next) => {
 		const myuser = await users.findOne({ "items._id": req.params.id });
 		const cart = myuser.items.filter((prev) => prev._id == req.params.id);
 		const item = cart[0].Paymethod.filter((prev) => prev._id == req.params.id1);
+		const payments = cart[0].Paymethod
 		console.log(item)
 		const result = await users.updateOne(
 			{ "items._id": req.params.id },
 			{ $set: { "items.$.payment": item[0].payname } }
 		);
 		console.log(result)
+		for (let payment of payments) {
+			const updateselect = {
+				$set: {
+					"items.$.Paymethod.$[elem].checked":payment._id == req.params.id1 ? true : false,	
+				},
+			}
+			const updateselect2 = {
+			 arrayFilters: [{ "elem._id":payment._id }] 
+			}
+			const a = await users.updateOne({ "items._id": req.params.id }, updateselect, updateselect2);
+			console.log(a)
+		}
 		res.status(200).json({ message: "payment selected" });
 	} catch (err) {
 		next(err);
@@ -188,7 +204,7 @@ const redquan = async (req, res, next) => {
 		const f = e[0];
 		if (f.quantity > 1) {
 			const addquantity = await users.updateOne(
-				{ "items._id": req.params.id2, "items.product._id": req.params.id1 },
+				{ "items._id": req.params.id2},
 				{
 					$set: {
 						"items.$.product.$[elem].quantity":
@@ -198,7 +214,7 @@ const redquan = async (req, res, next) => {
 				{ arrayFilters: [{ "elem._id": req.params.id1 }] }
 			);
 			const addsubtotal = await users.updateOne(
-				{ "items._id": req.params.id2, "items.product._id": req.params.id1 },
+				{ "items._id": req.params.id2 },
 				{
 					$set: {
 						"items.$.product.$[elem].subtotal":
@@ -297,7 +313,7 @@ const addquan = async (req, res, next) => {
 		const e = d.filter((prev) => prev._id == req.params.id1);
 		const f = e[0];
 		const addquantity = await users.updateOne(
-			{ "items._id": req.params.id2, "items.product._id": req.params.id1 },
+			{ "items._id": req.params.id2 },
 			{
 				$set: {
 					"items.$.product.$[elem].quantity":
@@ -307,7 +323,7 @@ const addquan = async (req, res, next) => {
 			{ arrayFilters: [{ "elem._id": req.params.id1 }] }
 		);
 		const addsubtotal = await users.updateOne(
-			{ "items._id": req.params.id2, "items.product._id": req.params.id1 },
+			{ "items._id": req.params.id2 },
 			{
 				$set: {
 					"items.$.product.$[elem].subtotal":
