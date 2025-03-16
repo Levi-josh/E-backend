@@ -20,6 +20,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.0",
+    "redis": "^4.7.0",
     "shortid": "^2.2.16",
     "web-push": "^3.6.7"
   }

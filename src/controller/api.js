@@ -39,6 +39,15 @@ const gethistory = async (req, res,next) => {
        next(err)
     }
 } 
+const getProducts = async (req, res,next) => {
+    try {
+        const mynote = await users.findOne({ _id: req.params.id })
+        const newnote = mynote.history.filter(prev => prev._id == req.params.id1)
+        res.status(200).json(newnote[0])
+    } catch (err) {
+       next(err)
+    }
+} 
 
 const newdemo = async (req, res,next) => {
     try {
@@ -93,7 +102,6 @@ const subscribe = async (req, res,next) => {
         const payload = json.stringify({title:'push test'})
         webpush.sendNotification(subscription,payload).catch(err=>console.log(err))
        }
-  
      catch (err) {
       next(err)
     }

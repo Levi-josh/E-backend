@@ -4,60 +4,50 @@ const users = require('../models/Signupschema')
 
 const login = async (req, res, next) => {
     try {
-        const myusers = await users.findOne({
-            'username': req.body.username
-        })
-        if (myusers) {
-            const hash = await bcrypt.compare(req.body.password, myusers.password)
-            if (hash) {
-                const newjwt = jwt.sign({ _id: myusers._id }, process.env.Access_Token,/* { expiresIn: '2 days' }*/)
-
-                res.status(200).json({'Accesss_Token':newjwt,'UserId':myusers._id})
-            } else {
-                throw new Error('incorrect password')
-            }
-        } else {
-            throw new Error('there is no user with that name')
+        const myusers = await users.findOne({ username: req.body.username }).select('+password'); // Select password explicitly if it's excluded by default
+        if (!myusers) {
+            return res.status(404).json({ error: 'User does not exist' });
         }
 
+        const hash = await bcrypt.compare(req.body.password, myusers.password);
+        if (!hash) {
+            return res.status(401).json({ error: 'Incorrect password' });
+        }
+
+        const newjwt = jwt.sign({ _id: myusers._id }, process.env.Access_Token, { expiresIn: '2d' });
+        res.status(200).json({ Accesss_Token: newjwt, UserId: myusers._id });
     } catch (err) {
-        next(err)
+        next(err);
     }
-}
+};
 
 const signup = async (req, res, next) => {
     try {
-        const salt = await bcrypt.genSalt()
-        const hash = await bcrypt.hash(req.body.password, salt)
-        const date = new Date()
-        const newtime = date.toLocaleTimeString()
+        const hash = await bcrypt.hash(req.body.password, 8); // Reduce rounds for better performance
 
+        const date = new Date().toLocaleTimeString();
+        const message = `Hi ${req.body.username}, welcome to Glamour Grove, one of the best e-commerce shopping apps offering the best services at a discount rate. Read more about us on our About page.`;
 
         const mynewusers = await users.create({
-            'username': req.body.username,
-            'password': hash,
-            'items': [],
-            'history': [],
-            'Notification': []
-        })
-        const message = `Hi ${mynewusers.username},welcome to Glamour Grove one of the best e-commerce shopping app which offers your the best services at a discount rate,do well to read more about as in our about page. `
+            username: req.body.username,
+            password: hash,
+            items: [],
+            history: [],
+            Notification: [{ note: message, time: date }]
+        });
 
-        await users.updateOne({ _id: mynewusers._id }, { $push: { Notification: { 'note': message, 'time': newtime } } })
-        const newjwt = jwt.sign({ _id: mynewusers._id }, process.env.Access_Token,/* { expiresIn: '2 days' }*/)
-        res.status(200).json({'Accesss_Token':newjwt,'UserId':mynewusers._id})
-
+        const newjwt = jwt.sign({ _id: mynewusers._id }, process.env.Access_Token, { expiresIn: '2d' });
+        res.status(201).json({ Accesss_Token: newjwt, UserId: mynewusers._id });
     } catch (err) {
-        next(err)
+        next(err);
     }
-}
+};
+
 
 const logout = async (req, res, next) => {
     try {
-        
-       
-            const newjwt = jwt.sign({ _id: req.body.id }, process.env.Access_Token, { expiresIn: '2s' })
-            
-            res.status(200).json(newjwt)
+    const newjwt = jwt.sign({ _id: req.body.id }, process.env.Access_Token, { expiresIn: '2s' })
+    res.status(200).json(newjwt)
        
     } catch (err) {
         next(err)

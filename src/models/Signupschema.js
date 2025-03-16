@@ -77,7 +77,7 @@ const newusers = new schema({
     Notification: [notify]
 
 })
-
+newusers.index({ username: 1 });
 
 
 module.exports = mongoose.model('User', newusers)

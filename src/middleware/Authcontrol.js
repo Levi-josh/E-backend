@@ -1,10 +1,8 @@
 const jwt = require('jsonwebtoken')
 
 const Auth = async (req, res, next) => {
-    try {
-       
+    try { 
         const authHeader = req.headers['authorization']
-
         if (!authHeader) throw new Error('No token found!')
         
         const token = authHeader.split(' ')[1]
