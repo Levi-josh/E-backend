@@ -16,7 +16,7 @@ webpush.setVapidDetails(
     process.env.Private_key
 );
 App.use(cors({origin:['http://localhost:3000','https://my-commerce.onrender.com']}))
-app.use(compression({
+App.use(compression({
     threshold: 1024, // Compress responses > 1KB
     filter: (req, res) => {
       if (req.headers['x-no-compression']) {
