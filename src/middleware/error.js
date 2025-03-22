@@ -16,15 +16,6 @@ const errorhandler = async (err, req, res, next) => {
         if (err.message == 'getaddrinfo ENOTFOUND ac-roubij3-shard-00-00.0fmc2gq.mongodb.net') {
             newerror.other = 'bad network'
     }
-    if (err.message == 'you are not logged in') {
-        newerror.other = 'you are not logged in'
-    }
-    if (err.message == 'there is no user with that name') {
-        newerror.username = 'there is no user with that name'
-    }
-    if (err.message == 'incorrect password') {
-        newerror.password= 'incorrect password'
-    }
     if (err.message == 'you cant select a number less than one') {
         newerror.other = 'you cant select a number less than one'
     }

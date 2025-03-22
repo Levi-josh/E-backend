@@ -32,6 +32,7 @@ const {
 	delcart,
 	delproduct,
 	getcart,
+	getCols
 } = require("../controller/cart");
 
 route.route("/logout").get(logout);
@@ -49,6 +50,8 @@ route.route("/complete/:id/:id1").put(complete1);
 route.route("/complete/:id/:id1").delete(complete2);
 
 route.route("/countrylist").get(getcountries);
+
+route.route("/getCols/:id").get(getCols);
 
 route.route("/delcart/:id").delete(delcart);
 

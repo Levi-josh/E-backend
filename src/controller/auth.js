@@ -3,17 +3,19 @@ const bcrypt = require('bcrypt')
 const users = require('../models/Signupschema')
 
 const login = async (req, res, next) => {
+    let newerror = { username: '', password: '', other: '' }
     try {
         const myusers = await users.findOne({ username: req.body.username }).select('+password'); // Select password explicitly if it's excluded by default
         if (!myusers) {
-            return res.status(404).json({ error: 'User does not exist' });
+            newerror.username='User does not exist'
+            return res.status(404).json(newerror);
         }
 
         const hash = await bcrypt.compare(req.body.password, myusers.password);
         if (!hash) {
-            return res.status(401).json({ error: 'Incorrect password' });
+            newerror.password='Incorrect password'
+            return res.status(401).json(newerror);
         }
-
         const newjwt = jwt.sign({ _id: myusers._id }, process.env.Access_Token, { expiresIn: '2d' });
         res.status(200).json({ Accesss_Token: newjwt, UserId: myusers._id });
     } catch (err) {

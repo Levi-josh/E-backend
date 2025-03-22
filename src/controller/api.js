@@ -39,11 +39,11 @@ const gethistory = async (req, res,next) => {
        next(err)
     }
 } 
-const getProducts = async (req, res,next) => {
+const getCols = async (req, res,next) => {
     try {
-        const mynote = await users.findOne({ _id: req.params.id })
-        const newnote = mynote.history.filter(prev => prev._id == req.params.id1)
-        res.status(200).json(newnote[0])
+        const user = await users.findOne({ _id: req.params.id })
+        const myCols = user.items
+        res.status(200).json(myCols)
     } catch (err) {
        next(err)
     }
@@ -109,4 +109,4 @@ const subscribe = async (req, res,next) => {
 
 
 
-module.exports = {getuser,newcol,subscribe, newdemo, selcountry,itemcart, Recieve, getcountries,gethistory,getnotification }
+module.exports = {getuser,newcol,subscribe, getCols,newdemo, selcountry,itemcart, Recieve, getcountries,gethistory,getnotification }
