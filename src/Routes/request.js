@@ -12,6 +12,7 @@ const {
 	getcountries,
 	gethistory,
 	getnotification,
+	getCols
 	 
 } = require("../controller/api");
 
