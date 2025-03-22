@@ -33,7 +33,7 @@ const {
 	delcart,
 	delproduct,
 	getcart,
-	getCols
+	
 } = require("../controller/cart");
 
 route.route("/logout").get(logout);
