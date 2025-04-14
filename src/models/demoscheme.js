@@ -6,7 +6,7 @@ const newarrive = new schema({
     id: Number,
     image: String,
     itemname: String,
-    rating: Number,
+    rating:String,
     price: Number,
     description: String,
     subtotal: Number,
